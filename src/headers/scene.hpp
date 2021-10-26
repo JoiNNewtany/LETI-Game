@@ -1,11 +1,18 @@
 #pragma once
 
+#include "cell.hpp"
 #include <vector>
 
 class Scene {
     public:
-        Scene();
+	Scene(unsigned _rows, unsigned _cols);
+        Scene(unsigned size) : Scene(size, size) {};
+
+        unsigned getRows() { return rows; }
+        unsigned getCols() { return cols; }
+
         ~Scene();
     private:
-        //2d matrix of cells
+        unsigned rows, cols;
+	std::vector<std::vector<Cell*>> grid;
 };
