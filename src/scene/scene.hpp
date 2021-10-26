@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cell.hpp"
+#include "cell/cell.hpp"
 #include <vector>
 
 class Scene {

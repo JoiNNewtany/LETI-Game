@@ -1,4 +1,4 @@
-#include "headers/scene.hpp"
+#include "scene.hpp"
 #include <stdexcept>
 
 Scene::Scene(unsigned _rows, unsigned _cols) {

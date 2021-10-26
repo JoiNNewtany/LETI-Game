@@ -1,6 +1,9 @@
 #include <iostream>
+#include "game/game.hpp"
 
 int main() {
-    std::cout << "Hewwo UwU";
+    Game* test = new Game();
+    test->begin();
+    std::cout << "Hewowo";
     return 0;
 }
