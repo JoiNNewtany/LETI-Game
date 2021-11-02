@@ -9,14 +9,22 @@ Scene::Scene(unsigned _rows, unsigned _cols) {
         throw std::length_error("_rows");
     }
 
+    // Initialize grid
     grid.resize(_rows);
 
     for (unsigned i = 0; i < grid.size(); i++) {
-        grid[i].resize(_cols, new Cell());
+        grid[i].resize(_cols);
     }
 
     rows = _rows;
     cols = _cols;
+
+    // Create new cells
+    for (unsigned i = 0; i < _rows; i++) {
+        for (unsigned j = 0; j < _cols; j++) {
+            grid[i][j] = new Cell();
+        }
+    }
 
     // Connect adjacent cells together
     for (unsigned i = 0; i < _rows; i++) {
