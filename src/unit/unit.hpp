@@ -10,17 +10,17 @@ class Unit : GameObject {
         Unit(/*Cell* c, int hp, int dm, int df*/) {}
         virtual ~Unit() {}
 
-        void setHealth(int h) { health = h; }
-        int getHealth() { return health; }
+        virtual void setHealth(int h) { health = h; }
+        virtual int getHealth() { return health; }
 
-        void setDefense(int d) { defense = d; }
-        int getDefense() { return defense; }
+        virtual void setDefense(int d) { defense = d; }
+        virtual int getDefense() { return defense; }
 
-        void setDamage(int d) { damage = d; }
-        int getDamage() { return damage; }
+        virtual void setDamage(int d) { damage = d; }
+        virtual int getDamage() { return damage; }
 
-        void setGraphics(char g) { graphics = g; }
-        char getGraphics() { return graphics; }
+        virtual void setGraphics(char g) { graphics = g; }
+        virtual char getGraphics() { return graphics; }
 
         virtual void attack(Unit&) = 0;
         virtual void evalCondition() {}
