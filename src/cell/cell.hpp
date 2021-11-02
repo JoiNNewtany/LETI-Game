@@ -17,21 +17,22 @@ class Cell {
         
         // HACK: Am I breaking encapsulation by returning these pointers?
         // Probably (most likely) ((yes))
+        // Is copying preferred in this case?
 
         void setUnit(Unit* u) { unit = u; }
-        Unit* getUnit() const { return unit; }
+        Unit* getUnit() { return unit; }
 
         void setNorthCell(Cell* c) { north = c; }
-        Cell* getNorthCell() const { return north; }
+        Cell* getNorthCell() { return north; }
 
         void setWestCell(Cell* c) { west = c; }
-        Cell* getWestCell() const { return west; }
+        Cell* getWestCell() { return west; }
 
         void setEastCell(Cell* c) { east = c; }
-        Cell* getEastCell() const { return east; }
+        Cell* getEastCell() { return east; }
         
         void setSouthCell(Cell* c) { south = c; }
-        Cell* getSouthCell() const { return south; }
+        Cell* getSouthCell() { return south; }
 
         Cell* ptr() { return this; }
 
