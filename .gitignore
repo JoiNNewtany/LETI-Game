@@ -1,6 +1,10 @@
 out/
 build/
 .cache/
+.undodir/
+
+# Vim files
+*.vim
 
 # Prerequisites
 *.d
