@@ -4,7 +4,7 @@
 std::list<GameObject*> GameObject::objects;
 
 GameObject::GameObject() {
-    //
+    objects.push_back(this);
 }
 
 GameObject::~GameObject() {
