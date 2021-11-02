@@ -14,16 +14,23 @@ enum GameState {
 // Handles game logic
 class Game {
     public:
-        Game();
-        //Game(Scene);
+        // Implements Meyers' Singleton
+        static Game& instance()
+        {
+            static Game g;
+            return g;
+        }
 
         void begin();
-        void end();
 
-        ~Game();
     private:
-        void draw(const Scene& scene);
+        Game() {}
+        ~Game();
 
-        // Stores all objects created in the game for easy memory management
-        std::vector<GameObject*> globalObjects;
+        void end();
+        void draw(const Scene&) const;
+        void checkObjects();
+        unsigned getObjLimit() { return 64; }
+
+        Scene* scene;
 };
