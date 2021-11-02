@@ -4,7 +4,8 @@ bool Unit::move(Cell* cell) {
     bool successful = false;
     
     if (cell != nullptr && cell->getUnit() == nullptr ) {
-        currentCell->setUnit(nullptr);
+        if (currentCell != nullptr)
+            currentCell->setUnit(nullptr);
         cell->setUnit(this);
         currentCell = cell->ptr();
         successful = true;
