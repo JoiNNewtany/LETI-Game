@@ -2,8 +2,9 @@
 #include "game/game.hpp"
 
 int main() {
-    Game* test = new Game();
-    test->begin();
-    std::cout << "Hewowo";
+    Game& game = Game::instance();
+    
+    game.begin();
+
     return 0;
 }
