@@ -4,13 +4,6 @@
 #include "gameObject/gameObject.hpp"
 #include "scene/scene.hpp"
 
-enum GameState {
-    P1_TURN,
-    P2_TURN,
-    GAME_OVER,
-    MENU,
-};
-
 // Handles game logic
 class Game {
     public:
@@ -30,7 +23,11 @@ class Game {
         void end();
         void draw(const Scene&) const;
         void checkObjects();
+        Scene* initDefaultScene();
         unsigned getObjLimit() { return 64; }
 
         Scene* scene;
+        // TODO: Create player class/struct???
+        // std::vector<Player> players;
+        std::vector<Unit*> units;
 };

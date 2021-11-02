@@ -12,6 +12,7 @@ Scene* initDefaultScene();
 
 Game::~Game() {
     //TODO: Do memory stuff and stuff
+    GameObject::freeAllObjects();
 }
 
 void Game::begin() {
@@ -19,19 +20,41 @@ void Game::begin() {
     scene = initDefaultScene();
 
     // Game loop:
-    // while (true) ...
-    // Check object limit
-    while (GameObject::getObjectCount() > getObjLimit()) {
-        GameObject::freeOldestObject();
-    }
-    // Draw screen
-    draw(*scene);
+    while (true) {
+        // Check object limit
+        while (GameObject::getObjectCount() > getObjLimit())
+            GameObject::freeOldestObject();
+        
+        // Draw screen
+        draw(*scene);
     
-    // Draw menu
+        // Draw menu
+        std::cout << "(h j k l) move\n(ah aj ak al) attack";
 
-    // Capture input
-    
-    //clearScreen();
+        // Capture input
+        char test;
+        std::cin >> test;
+        
+        // React to input
+        switch (test) {
+            case 'h':
+                units[0]->moveWest();
+                break;
+            case 'j':
+                units[0]->moveSouth();
+                break;
+            case 'k':
+                units[0]->moveNorth();
+                break;
+            case 'l':
+                units[0]->moveEast();
+                break;
+            default:
+                break;
+        }
+        
+        clearScreen();
+    }
 }
 
 void Game::end() {
@@ -67,13 +90,13 @@ void clearScreen() {
 #endif
 }
 
-Scene* initDefaultScene() {
+Scene* Game::initDefaultScene() {
     Scene* scene = new Scene(12);
     
     // Place units, decorations, items
-    Swordsmen* s = new Swordsmen();
-    scene->getCell(2, 2).setUnit(s);
-    s->moveSouth();
+    Unit* s = new Swordsmen();
+    units.push_back(s);
+    s->move(&scene->getCell(2, 2));
 
     return scene;
 }
