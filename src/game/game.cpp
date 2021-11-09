@@ -5,7 +5,7 @@
 #include "game.hpp"
 #include "gameObject/gameObject.hpp"
 #include "scene/scene.hpp"
-#include "unit/infantry/swordsmen.hpp"
+#include "unit/infantry/swordsmanFactory.hpp"
 
 void clearScreen();
 Scene* initDefaultScene();
@@ -94,7 +94,8 @@ Scene* Game::initDefaultScene() {
     Scene* scene = new Scene(12);
     
     // Place units, decorations, items
-    Unit* s = new Swordsmen();
+    SwordsmanFactory* sf = new SwordsmanFactory;
+    Unit* s = sf->create();
     units.push_back(s);
     s->move(&scene->getCell(2, 2));
 

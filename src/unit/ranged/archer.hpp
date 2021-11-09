@@ -2,10 +2,10 @@
 
 #include "unit/unit.hpp"
 
-class Swordsmen : public Unit {
+class Archer : public Unit {
     public:
-        Swordsmen() : health(250), damage(60), defense(5) {}
-        ~Swordsmen() {}
+        Archer() : health(200), damage(50), defense(1) {}
+        ~Archer() {}
 
         virtual void attack(Unit&);
 
@@ -23,9 +23,8 @@ class Swordsmen : public Unit {
 
     private:
         Cell* currentCell;
-        char graphics = 's';
+        char graphics = 'a';
         int health;
         int damage;
         int defense;
 };
-
