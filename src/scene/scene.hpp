@@ -7,8 +7,9 @@ class Scene {
     using Grid = std::vector<std::vector<Cell*>>;
 
     public:
-	Scene(unsigned _rows, unsigned _cols);
+        Scene(unsigned _rows, unsigned _cols);
         Scene(unsigned size) : Scene(size, size) {};
+        Scene(const Scene& orig);
 
         unsigned getRows() const { return rows; }
         unsigned getCols() const { return cols; }
@@ -16,6 +17,7 @@ class Scene {
         const Grid& getGrid() const;
 
         ~Scene();
+    
     private:
         unsigned getMaxSize() const { return 24; }
 

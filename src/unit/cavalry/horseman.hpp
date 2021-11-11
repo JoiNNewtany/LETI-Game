@@ -8,6 +8,8 @@ class Horseman : public Unit {
         ~Horseman() {}
 
         virtual void attack(Unit&);
+        virtual void evalCondition();
+        virtual Horseman* duplicate();
 
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }
@@ -23,7 +25,7 @@ class Horseman : public Unit {
 
     private:
         Cell* currentCell;
-        char graphics = 's';
+        char graphics = 'h';
         int health;
         int damage;
         int defense;

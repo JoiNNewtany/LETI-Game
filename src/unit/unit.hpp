@@ -7,7 +7,6 @@ class Cell;
 
 class Unit : GameObject {
     public:
-        //Unit(/*Cell* c, int hp, int dm, int df*/) {}
         virtual ~Unit() {}
 
         virtual void setHealth(int h) { health = h; }
@@ -23,7 +22,8 @@ class Unit : GameObject {
         virtual char getGraphics() { return graphics; }
 
         virtual void attack(Unit&) = 0;
-        virtual void evalCondition() {} // TODO: make = 0;
+        virtual void evalCondition() = 0;
+        virtual Unit* duplicate() = 0;
         virtual bool move(Cell*);
         virtual bool moveNorth();
         virtual bool moveWest();
@@ -33,7 +33,7 @@ class Unit : GameObject {
     protected:
         // Cell that the unit is currently in
         Cell* currentCell;
-        char graphics = '@';
+        char graphics;
         int health;
         int damage;
         // Gets subtracted from damage

@@ -19,6 +19,8 @@ void Game::begin() {
     clearScreen();
     scene = initDefaultScene();
 
+    Scene* copytest = new Scene(*scene);
+
     // Game loop:
     while (true) {
         // Check object limit
@@ -27,6 +29,8 @@ void Game::begin() {
         
         // Draw screen
         draw(*scene);
+        std::cout << "Copy of the scene:\n";
+        draw(*copytest);
     
         // Draw menu
         std::cout << "(h j k l) move\n(ah aj ak al) attack";
@@ -65,7 +69,7 @@ void Game::draw(const Scene& scn) const {
     auto grid = scn.getGrid();
 
     std::cout << std::endl;
-    
+
     for (auto cells : grid) {
         for (Cell* cell : cells) {
             if (cell->getUnit() != nullptr)

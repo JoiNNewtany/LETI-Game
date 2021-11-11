@@ -45,6 +45,43 @@ Scene::Scene(unsigned _rows, unsigned _cols) {
     }
 }
 
+Scene::Scene(const Scene& old) {
+    rows = old.rows;
+    cols = old.cols;
+
+    // Initialize grid
+    grid.resize(rows);
+
+    for (unsigned i = 0; i < grid.size(); i++) {
+        grid[i].resize(cols);
+    }
+
+    // Copy cells
+    for (unsigned i = 0; i < rows; i++) {
+        for (unsigned j = 0; j < cols; j++) {
+            grid[i][j] = old.grid[i][j]->duplicate();
+        }
+    }
+
+    // Connect adjacent cells together
+    for (unsigned i = 0; i < rows; i++) {
+        for (unsigned j = 0; j < cols; j++) {
+            if (i != 0)
+                // Connect cell above
+                grid[i][j]->setNorthCell(grid[i - 1][j]);
+            if (i != rows - 1)
+                // Connect cell below
+                grid[i][j]->setSouthCell(grid[i + 1][j]);
+            if (j != 0)
+                // Connect cell to the left
+                grid[i][j]->setWestCell(grid[i][j - 1]);
+            if (j != cols - 1)
+                // Connect cell to the right
+                grid[i][j]->setEastCell(grid[i][j + 1]);
+        }
+    }
+}
+
 Scene::~Scene() {
     for (unsigned i = 0; i < rows; i++) {
         for (unsigned j = 0; j < cols; j++) {

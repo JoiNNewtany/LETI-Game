@@ -8,6 +8,8 @@ class Archer : public Unit {
         ~Archer() {}
 
         virtual void attack(Unit&);
+        virtual void evalCondition();
+        virtual Archer* duplicate();
 
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }

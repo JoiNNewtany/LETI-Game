@@ -8,6 +8,8 @@ class Crossbowman : public Unit {
         ~Crossbowman() {}
 
         virtual void attack(Unit&);
+        virtual void evalCondition();
+        virtual Crossbowman* duplicate();
 
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }

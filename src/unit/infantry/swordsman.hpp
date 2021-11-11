@@ -8,6 +8,8 @@ class Swordsman : public Unit {
         ~Swordsman() {}
 
         virtual void attack(Unit&);
+        virtual void evalCondition();
+        virtual Swordsman* duplicate();
 
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }

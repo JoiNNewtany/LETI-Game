@@ -8,6 +8,8 @@ class Knight : public Unit {
         ~Knight() {}
 
         virtual void attack(Unit&);
+        virtual void evalCondition();
+        virtual Knight* duplicate();
 
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }
@@ -23,7 +25,7 @@ class Knight : public Unit {
 
     private:
         Cell* currentCell;
-        char graphics = 's';
+        char graphics = 'k';
         int health;
         int damage;
         int defense;

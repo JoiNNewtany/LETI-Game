@@ -8,7 +8,8 @@ class Spearman : public Unit {
         ~Spearman() {}
 
         virtual void attack(Unit&);
-
+        virtual void evalCondition();
+        virtual Spearman* duplicate();
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }
 
