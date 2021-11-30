@@ -8,7 +8,16 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-    //
+    objects.remove(this);
+    notify();
+}
+
+void GameObject::freeOldestObject() {
+    delete objects.front();
+}
+
+void GameObject::freeNewestObject() {
+    delete objects.back();
 }
 
 void GameObject::freeAllObjects() {
