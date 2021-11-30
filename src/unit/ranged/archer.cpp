@@ -1,11 +1,8 @@
 #include "archer.hpp"
 
-void Archer::attack(Unit& unit) {
+bool Archer::attack(Unit& unit) {
     // Ranged unit thus doesn't take return damage after attacking
-}
-
-void Archer::evalCondition() {
-    // Evaluate this unit's condition after taking damage
+    return false;
 }
 
 Archer* Archer::duplicate() {

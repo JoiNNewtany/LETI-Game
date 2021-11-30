@@ -1,13 +1,12 @@
 #pragma once
 
 #include "gameObject/gameObject.hpp"
-#include "cell/cell.hpp"
 
 class Cell;
 
-class Unit : GameObject {
+class Unit : public GameObject {
     public:
-        virtual ~Unit() {}
+        virtual ~Unit();
 
         virtual void setHealth(int h) { health = h; }
         virtual int getHealth() { return health; }
@@ -21,8 +20,8 @@ class Unit : GameObject {
         virtual void setGraphics(char g) { graphics = g; }
         virtual char getGraphics() { return graphics; }
 
-        virtual void attack(Unit&) = 0;
-        virtual void evalCondition() = 0;
+        virtual bool isAlive() { return health > 0; }
+        virtual bool attack(Unit&) = 0;
         virtual Unit* duplicate() = 0;
         virtual bool move(Cell*);
         virtual bool moveNorth();
@@ -33,7 +32,7 @@ class Unit : GameObject {
     protected:
         // Cell that the unit is currently in
         Cell* currentCell;
-        char graphics;
+        char graphics = '_';
         int health;
         int damage;
         // Gets subtracted from damage

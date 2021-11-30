@@ -1,9 +1,9 @@
-pragma once
+#pragma once
 
 #include "unit/unitFactory.hpp"
 #include "spearman.hpp"
 
-class SpearmanFactory {
+class SpearmanFactory : public UnitFactory {
     public:
-        Unit* create() { return new Spearman; }
+        Unit* create() const override { return new Spearman; }
 };

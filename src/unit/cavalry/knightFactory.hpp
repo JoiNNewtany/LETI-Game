@@ -3,7 +3,7 @@
 #include "unit/unitFactory.hpp"
 #include "knight.hpp"
 
-class KnightFactory {
+class KnightFactory : public UnitFactory {
     public:
-        Unit* create() { return new Knight; }
+        Unit* create() const override { return new Knight; }
 };

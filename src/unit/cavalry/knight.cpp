@@ -1,11 +1,8 @@
 #include "knight.hpp"
 
-void Knight::attack(Unit& unit) {
+bool Knight::attack(Unit& unit) {
     // Same as horsemen
-}
-
-void Knight::evalCondition() {
-    // Evaluate this unit's condition after taking damage
+    return false;
 }
 
 Knight* Knight::duplicate() {

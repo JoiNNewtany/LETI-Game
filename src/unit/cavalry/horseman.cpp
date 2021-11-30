@@ -1,11 +1,8 @@
 #include "horseman.hpp"
 
-void Horseman::attack(Unit& unit) {
+bool Horseman::attack(Unit& unit) {
     // Bonus damage against ranged
-}
-
-void Horseman::evalCondition() {
-    // Evaluate this unit's condition after taking damage
+    return false;
 }
 
 Horseman* Horseman::duplicate() {

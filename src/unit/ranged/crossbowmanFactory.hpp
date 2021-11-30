@@ -3,7 +3,7 @@
 #include "unit/unitFactory.hpp"
 #include "crossbowman.hpp"
 
-class CrossbowmanFactory {
+class CrossbowmanFactory : public UnitFactory {
     public:
-        Unit* create() { return new Crossbowman; }
+        Unit* create() const override { return new Crossbowman; }
 };

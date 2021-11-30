@@ -1,11 +1,8 @@
 #include "crossbowman.hpp"
 
-void Crossbowman::attack(Unit& unit) {
+bool Crossbowman::attack(Unit& unit) {
     // Same as Archers
-}
-
-void Crossbowman::evalCondition() {
-    // Evaluate this unit's condition after taking damage
+    return false;
 }
 
 Crossbowman* Crossbowman::duplicate() {

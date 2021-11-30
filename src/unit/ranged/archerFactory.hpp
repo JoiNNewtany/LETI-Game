@@ -3,7 +3,7 @@
 #include "unit/unitFactory.hpp"
 #include "archer.hpp"
 
-class ArcherFactory {
+class ArcherFactory : public UnitFactory {
     public:
-        Unit* create() { return new Archer; }
+        Unit* create() const override { return new Archer; }
 };

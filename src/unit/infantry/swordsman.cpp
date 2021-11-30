@@ -1,19 +1,19 @@
 #include "swordsman.hpp"
 
-void Swordsman::attack(Unit& unit) {
-    // Deal damage
-    unit.setHealth(unit.getHealth() - (damage - unit.getDefense()));
-    // Get attacked back because melee combat
-    unit.attack(*this);
-    // Check both units' conditions
-    unit.evalCondition();
-    evalCondition();
+bool Swordsman::attack(Unit& unit) {
+    bool successful = false;
 
-    // TODO: Make classes for infantry etc and let them handle most commands?
-}
+    // If both units are alive
+    if (unit.isAlive() && isAlive()) {
+        // Deal damage
+        unit.setHealth(unit.getHealth() - (damage - unit.getDefense()));
+        // Get attacked back because melee combat
+        unit.attack(*this);
 
-void Swordsman::evalCondition() {
-    // Evaluate this unit's condition after taking damage
+        successful = true;
+    }
+    
+    return successful;
 }
 
 Swordsman* Swordsman::duplicate() {

@@ -4,7 +4,7 @@
 
 class UnitFactory {
     public:
-        virtual Unit* create() = 0;
-        virtual ~UnitFactory();
+        virtual Unit* create() const = 0;
+        virtual ~UnitFactory() {}
 };
 

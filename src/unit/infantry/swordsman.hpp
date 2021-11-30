@@ -4,30 +4,27 @@
 
 class Swordsman : public Unit {
     public:
-        Swordsman() : health(250), damage(60), defense(5) {}
+        Swordsman(int hp = 250, int dmg = 60, int df = 5) {
+            health = hp;
+            damage = dmg;
+            defense = df;
+            graphics = 's';
+        }
         ~Swordsman() {}
 
-        virtual void attack(Unit&);
-        virtual void evalCondition();
-        virtual Swordsman* duplicate();
+        virtual bool attack(Unit&) override;
+        virtual Swordsman* duplicate() override;
 
-        virtual void setHealth(int h) { health = h; }
-        virtual int getHealth() { return health; }
+        virtual void setHealth(int h) override { health = h; }
+        virtual int getHealth() override { return health; }
 
-        virtual void setDefense(int d) { defense = d; }
-        virtual int getDefense() { return defense; }
+        virtual void setDefense(int d) override { defense = d; }
+        virtual int getDefense() override { return defense; }
 
-        virtual void setDamage(int d) { damage = d; }
-        virtual int getDamage() { return damage; }
+        virtual void setDamage(int d) override { damage = d; }
+        virtual int getDamage() override { return damage; }
 
-        virtual void setGraphics(char g) { graphics = g; }
-        virtual char getGraphics() { return graphics; }
-
-    private:
-        Cell* currentCell;
-        char graphics = 's';
-        int health;
-        int damage;
-        int defense;
+        virtual void setGraphics(char g) override { graphics = g; }
+        virtual char getGraphics() override { return graphics; }
 };
 

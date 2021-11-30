@@ -4,28 +4,26 @@
 
 class Spearman : public Unit {
     public:
-        Spearman() : health(200), damage(80), defense(3) {}
+        Spearman(int hp = 200, int dmg = 80, int df = 3) {
+            health = hp;
+            damage = dmg;
+            defense = df;
+            graphics = 'p';
+        }
         ~Spearman() {}
 
-        virtual void attack(Unit&);
-        virtual void evalCondition();
-        virtual Spearman* duplicate();
-        virtual void setHealth(int h) { health = h; }
-        virtual int getHealth() { return health; }
+        virtual bool attack(Unit&) override;
+        virtual Spearman* duplicate() override;
+        
+        virtual void setHealth(int h) override { health = h; }
+        virtual int getHealth() override { return health; }
 
-        virtual void setDefense(int d) { defense = d; }
-        virtual int getDefense() { return defense; }
+        virtual void setDefense(int d) override { defense = d; }
+        virtual int getDefense() override { return defense; }
 
-        virtual void setDamage(int d) { damage = d; }
-        virtual int getDamage() { return damage; }
+        virtual void setDamage(int d) override { damage = d; }
+        virtual int getDamage() override { return damage; }
 
-        virtual void setGraphics(char g) { graphics = g; }
-        virtual char getGraphics() { return graphics; }
-
-    private:
-        Cell* currentCell;
-        char graphics = 'p';
-        int health;
-        int damage;
-        int defense;
+        virtual void setGraphics(char g) override { graphics = g; }
+        virtual char getGraphics() override { return graphics; }
 };

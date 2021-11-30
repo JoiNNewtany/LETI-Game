@@ -1,11 +1,8 @@
 #include "spearman.hpp"
 
-void Spearman::attack(Unit& unit) {
+bool Spearman::attack(Unit& unit) {
     // Deal additional damage to cavalry
-}
-
-void Spearman::evalCondition() {
-    // Evaluate this unit's condition after taking damage
+    return false;
 }
 
 Spearman* Spearman::duplicate() {
