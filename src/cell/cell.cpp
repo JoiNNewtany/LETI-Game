@@ -1,4 +1,5 @@
 #include "cell.hpp"
+#include "unit/unit.hpp"
 
 Cell* Cell::duplicate() const {
     Cell* result = new Cell();

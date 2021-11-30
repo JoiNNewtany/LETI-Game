@@ -1,9 +1,5 @@
 #pragma once
 
-#include <vector>
-#include "gameObject/gameObject.hpp"
-#include "unit/unit.hpp"
-
 class Unit;
 
 class Cell {
@@ -40,6 +36,7 @@ class Cell {
 
     private:
         Unit* unit = nullptr;
+        //Terrain* terrain = nullptr; // Instead of modifiers?
         //std::vector<CellModifier*> modifiers;
         char graphics;
 
