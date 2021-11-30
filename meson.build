@@ -19,6 +19,7 @@ sources = ['src/main.cpp',
   'src/unit/ranged/crossbowman.cpp',
   'src/unit/cavalry/horseman.cpp',
   'src/unit/cavalry/knight.cpp',
+  'src/unit/building/town.cpp',
 ]
 
 headers = include_directories('src')
