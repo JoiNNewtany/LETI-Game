@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "gameObject/gameObject.hpp"
-#include "scene/scene.hpp"
+
+class Scene;
+class Unit;
+class Town;
 
 // Handles game logic
 class Game {
@@ -16,6 +18,9 @@ class Game {
 
         void begin();
 
+        // Temporary members -- REMOVE LATER
+        void removeUnit(Unit*);
+
     private:
         Game() {}
         ~Game();
@@ -24,10 +29,13 @@ class Game {
         void draw(const Scene&) const;
         void checkObjects();
         Scene* initDefaultScene();
-        unsigned getObjLimit() { return 64; }
+        unsigned getObjectLimit() { return 6; }
 
         Scene* scene;
-        // TODO: Create player class/struct???
+        // TODO: Create Player class
         // std::vector<Player> players;
+        
+        // Temporary fields -- REMOVE LATER
         std::vector<Unit*> units;
+        Town* town;
 };
