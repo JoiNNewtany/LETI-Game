@@ -29,8 +29,9 @@ class Game {
         void draw(const Scene&) const;
         void checkObjects();
         Scene* initDefaultScene();
-        unsigned getObjectLimit() { return 6; }
+        unsigned getObjectLimit() { return objectLimit; }
 
+        unsigned objectLimit = 32;
         Scene* scene;
         // TODO: Create Player class
         // std::vector<Player> players;

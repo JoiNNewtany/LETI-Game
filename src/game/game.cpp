@@ -3,16 +3,30 @@
 #include <cstdlib>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 #include "game.hpp"
 #include "gameObject/gameObject.hpp"
 #include "scene/scene.hpp"
-#include "unit/infantry/swordsmanFactory.hpp"
+
 #include "unit/building/town.hpp"
 #include "unit/unitFactory.hpp"
+#include "unit/infantry/swordsmanFactory.hpp"
+#include "unit/infantry/spearmanFactory.hpp"
+#include "unit/ranged/archerFactory.hpp"
+#include "unit/ranged/crossbowmanFactory.hpp"
+#include "unit/cavalry/horsemanFactory.hpp"
+#include "unit/cavalry/knightFactory.hpp"
+
+#include "terrain/terrain.hpp"
+#include "terrain/river.hpp"
+#include "terrain/mountain.hpp"
+#include "terrain/hill.hpp"
+#include "terrain/spike.hpp"
 
 void clearScreen();
 Scene* initDefaultScene();
+void buildUnit(Town*, SwordsmanFactory*, std::vector<Unit*>&);
 
 Game::~Game() {
     // TODO: Do memory stuff and stuff
@@ -21,35 +35,26 @@ Game::~Game() {
 
 void Game::begin() {
     clearScreen();
+    
     scene = initDefaultScene();
+    SwordsmanFactory* sf = new SwordsmanFactory();
 
     // TODO: DELETE AFTER TESTING
-    /*
-    Town* t = new Town();
-    t->move(&scene->getCell(6, 9));
-    SwordsmanFactory* sf = new SwordsmanFactory();
     
-    Unit* u1 = t->produce(*sf);
-    if (u1 != nullptr) {
-        units.push_back(u1);
-        u1->move(t->getPlacementCell());
-    }
-
-    Unit* u2 = t->produce(*sf);
-    if (u2 != nullptr) {
-        units.push_back(u2);
-        u2->move(t->getPlacementCell());
-    }
+    buildUnit(town, sf, units);
     
-    delete u2;
-    */
-    SwordsmanFactory* sf = new SwordsmanFactory();
-
     // Game loop:
     while (true) {
         // Check object limit
         while (GameObject::getObjectCount() > getObjectLimit())
-            GameObject::freeOldestObject();
+            GameObject::freeNewestObject();
+
+        // Remove dead units
+        for (Unit* unit : units) {
+            if (!unit->isAlive()) {
+                delete unit;
+            }
+        }
 
         // Draw screen
         draw(*scene);
@@ -58,7 +63,13 @@ void Game::begin() {
         std::cout << "Objects: " << GameObject::getObjectCount() << '/'
                   << getObjectLimit() << '\n';
 
-        std::cout << "Town units: " << town->getOwnedUnits() << '\n';
+        std::cout << "Town units: " << town->getOwnedUnits() << '/'
+                  << town->getMaxUnits() << '\n';
+
+        if (!units.empty())
+            std::cout << "Unit[0] stats: df=" << units[0]->getDefense()
+                  << "  dm=" << units[0]->getDamage() << "  hp="
+                  << units[0]->getHealth() << "\n\n";
 
         for (size_t i = 0; i < units.size(); i++) {
             std::cout << i << ": " << units[i]->getGraphics() << std::endl;
@@ -72,7 +83,7 @@ void Game::begin() {
         unsigned selection;
 
         std::cin >> command >> selection;
-        // if end of cin, do switch, else input selection
+        // if end of cin, do switch, else input selection?
         
         // React to input
         switch (command) {
@@ -89,19 +100,11 @@ void Game::begin() {
                 units[selection]->moveEast();
                 break;
             case 'u':
-                {
-                    Unit* u = town->produce(*sf);
-                    if (u != nullptr) {
-                        units.push_back(u);
-                        u->move(town->getPlacementCell());
-                    }
-                    break;
-                }
+                buildUnit(town, sf, units);
+                break;
             case 'd':
-                {
-                    delete units[selection];
-                    break;
-                }
+                delete units[selection];
+                break;
             default:
                 break;
         }
@@ -123,8 +126,8 @@ void Game::draw(const Scene& scn) const {
         for (Cell* cell : cells) {
             if (cell->getUnit() != nullptr)
                 std::cout << cell->getUnit()->getGraphics() << ' ';
-            // else if (cell->getModifier() != nullptr)
-            //     std::cout << cell->getModifier()->getGraphics() << ' ';
+            else if (cell->getTerrain() != nullptr)
+                std::cout << cell->getTerrain()->getGraphics() << ' ';
             else
                 std::cout << cell->getGraphics() << ' ';
         }
@@ -143,21 +146,37 @@ void clearScreen() {
 #endif
 }
 
+void buildUnit(Town* t, SwordsmanFactory* sf, std::vector<Unit*>& units) {
+    Unit* u = t->produce(*sf);
+    if (u != nullptr) {
+        units.push_back(u);
+        u->move(t->getPlacementCell());
+    }
+}
+
 Scene* Game::initDefaultScene() {
     Scene* scene = new Scene(12);
     
-    // Place units, decorations, items
+    // Place units
 
     town = new Town();
     town->move(&scene->getCell(6, 9));
 
-    SwordsmanFactory* sf = new SwordsmanFactory();
-    
-    Unit* u = town->produce(*sf);
-    if (u != nullptr) {
-        units.push_back(u);
-        u->move(town->getPlacementCell());
-    }
+    // Place terrain
+
+    Terrain* river = new River();
+    scene->getCell(4, 4).setTerrain(river);
+
+    Terrain* mountain = new Mountain();
+    scene->getCell(6, 4).setTerrain(mountain);
+
+    Terrain* hill = new Hill();
+    scene->getCell(8, 4).setTerrain(hill);
+
+    Terrain* spike = new Spike();
+    scene->getCell(10, 4).setTerrain(spike);
+
+    // Place items
 
     return scene;
 }

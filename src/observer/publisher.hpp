@@ -23,5 +23,6 @@ class Publisher : public IPublisher {
         }
 
     protected:
+        // FIX: If a subscriber gets destroyed, publisher notifies nullptr.
         std::list<IListener*> subscribers;
 };

@@ -5,12 +5,18 @@ project('LetiGame', 'cpp',
 
 target_name = 'letigame'
 
-sources = ['src/main.cpp',
+sources = [
+  'src/main.cpp',
   # Game classes
   'src/game/game.cpp',
   'src/scene/scene.cpp',
   'src/cell/cell.cpp',
   'src/gameObject/gameObject.cpp',
+  # Terrain
+  'src/terrain/river.cpp',
+  'src/terrain/mountain.cpp',
+  'src/terrain/hill.cpp',
+  'src/terrain/spike.cpp',
   # Unit hierarchy
   'src/unit/unit.cpp',
   'src/unit/infantry/swordsman.cpp',
