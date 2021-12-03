@@ -4,7 +4,7 @@
 
 class Spearman : public Unit {
     public:
-        Spearman(int hp = 200, int dmg = 80, int df = 3) {
+        Spearman(int hp = 45, int dmg = 8, int df = 3) {
             health = hp;
             damage = dmg;
             defense = df;

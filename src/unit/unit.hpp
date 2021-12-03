@@ -17,9 +17,6 @@ class Unit : public GameObject {
         virtual void setDamage(int d) { damage = d; }
         virtual int getDamage() { return damage; }
 
-        virtual void setGraphics(char g) { graphics = g; }
-        virtual char getGraphics() { return graphics; }
-
         virtual bool isAlive() { return health > 0; }
         virtual bool attack(Unit&) = 0;
         virtual Unit* duplicate() = 0;
@@ -32,7 +29,6 @@ class Unit : public GameObject {
     protected:
         // Cell that the unit is currently in
         Cell* currentCell;
-        char graphics = '_';
         int health;
         int damage;
         // Gets subtracted from damage

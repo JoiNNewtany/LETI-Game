@@ -4,7 +4,7 @@
 
 class Archer : public Unit {
     public:
-        Archer(int hp = 200, int dmg = 50, int df = 1) {
+        Archer(int hp = 30, int dmg = 8, int df = 2) {
             health = hp;
             damage = dmg;
             defense = df;

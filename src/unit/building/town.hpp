@@ -8,11 +8,11 @@ class UnitFactory;
 
 class Town : public Unit, public IListener {
     public:
-        Town(unsigned mu = 8, int hp = 800, int df = 40) {
+        Town(unsigned mu = 8, int hp = 200, int df = 5) {
             maxUnits = mu;
             health = hp;
             defense = df;
-            graphics = '#';
+            graphics = '@';
         }
         ~Town() {}
 

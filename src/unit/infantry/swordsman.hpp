@@ -4,7 +4,7 @@
 
 class Swordsman : public Unit {
     public:
-        Swordsman(int hp = 250, int dmg = 60, int df = 5) {
+        Swordsman(int hp = 50, int dmg = 10, int df = 3) {
             health = hp;
             damage = dmg;
             defense = df;

@@ -4,7 +4,7 @@
 
 class Knight : public Unit {
     public:
-        Knight(int hp = 280, int dmg = 80, int df = 25) {
+        Knight(int hp = 80, int dmg = 15, int df = 5) {
             health = hp;
             damage = dmg;
             defense = df;

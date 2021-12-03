@@ -16,6 +16,9 @@ class GameObject : public Publisher {
         static void freeNewestObject();
         static void freeAllObjects();
 
+        virtual void setGraphics(char g) { graphics = g; }
+        virtual char getGraphics() { return graphics; }
+
     protected:
         char graphics;
 };
