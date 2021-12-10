@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <limits>
 
 #include "game.hpp"
 #include "gameObject/gameObject.hpp"
@@ -18,15 +19,18 @@
 #include "unit/cavalry/horsemanFactory.hpp"
 #include "unit/cavalry/knightFactory.hpp"
 
-#include "terrain/terrain.hpp"
 #include "terrain/river.hpp"
 #include "terrain/mountain.hpp"
 #include "terrain/hill.hpp"
 #include "terrain/spike.hpp"
 
+#include "item/sharpeningStone.hpp"
+#include "item/armorPlates.hpp"
+#include "item/medicalSupplies.hpp"
+
 void clearScreen();
 Scene* initDefaultScene();
-void buildUnit(Town*, SwordsmanFactory*, std::vector<Unit*>&);
+void buildUnit(Town*, UnitFactory*, std::vector<Unit*>&);
 
 Game::~Game() {
     // TODO: Do memory stuff and stuff
@@ -37,11 +41,16 @@ void Game::begin() {
     clearScreen();
     
     scene = initDefaultScene();
-    SwordsmanFactory* sf = new SwordsmanFactory();
+    SwordsmanFactory* swordsmanF = new SwordsmanFactory();
+    SpearmanFactory* spearmanF = new SpearmanFactory();
+    ArcherFactory* archerF = new ArcherFactory();
+    CrossbowmanFactory* crossbowmanF = new CrossbowmanFactory();
+    HorsemanFactory* horsemanF = new HorsemanFactory();
+    KnightFactory* knightF = new KnightFactory();
 
     // TODO: DELETE AFTER TESTING
     
-    buildUnit(town, sf, units);
+    buildUnit(town, swordsmanF, units);
     
     // Game loop:
     while (true) {
@@ -49,7 +58,7 @@ void Game::begin() {
         while (GameObject::getObjectCount() > getObjectLimit())
             GameObject::freeNewestObject();
 
-        // Remove dead units
+        // Remove dead units  TODO: Inefficient, use observer
         for (Unit* unit : units) {
             if (!unit->isAlive()) {
                 delete unit;
@@ -61,32 +70,43 @@ void Game::begin() {
     
         // Draw menu
         std::cout << "Objects: " << GameObject::getObjectCount() << '/'
-                  << getObjectLimit() << '\n';
+                  << getObjectLimit() << std::endl;
 
         std::cout << "Town units: " << town->getOwnedUnits() << '/'
-                  << town->getMaxUnits() << '\n';
-
-        if (!units.empty())
-            std::cout << "Unit[0] stats: df=" << units[0]->getDefense()
-                  << "  dm=" << units[0]->getDamage() << "  hp="
-                  << units[0]->getHealth() << "\n\n";
+                  << town->getMaxUnits() << std::endl;
 
         for (size_t i = 0; i < units.size(); i++) {
-            std::cout << i << ": " << units[i]->getGraphics() << std::endl;
+            std::cout << i << ": " << units[i]->getGraphics()
+                      << "  df=" << units[i]->getDefense()
+                      << "  dm=" << units[i]->getDamage()
+                      << "  hp=" << units[i]->getHealth()
+                      << '/' << units[i]->getMaxHealth()
+                      << std::endl;
         }
 
         std::cout << "\nCommand syntax: <command><unit_number>\n";
-        std::cout << "(h j k l) move\n(u) make unit\n(d) delete unit\n";
+        std::cout << "(h j k l) move\n(y u i o) attack\n" << 
+                     "(s p a c r n) make unit\n(d) delete unit\n";
 
         // Capture input
         char command;
         unsigned selection;
 
         std::cin >> command >> selection;
-        // if end of cin, do switch, else input selection?
+
+        // FIX: Unable to produce units when units vector is empty
+        // Validate input
+        while (std::cin.fail() || selection >= units.size()) {
+            std::cin.clear();
+            std::cin.ignore(
+                std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Incorrect input." << std::endl;
+            std::cin >> command >> selection;
+        }
         
         // React to input
         switch (command) {
+            // Movement
             case 'h':
                 units[selection]->moveWest();
                 break;
@@ -99,11 +119,41 @@ void Game::begin() {
             case 'l':
                 units[selection]->moveEast();
                 break;
-            case 'u':
-                buildUnit(town, sf, units);
+            // Produce unit
+            case 's':
+                buildUnit(town, swordsmanF, units);
                 break;
+            case 'p':
+                buildUnit(town, spearmanF, units);
+                break;
+            case 'a':
+                buildUnit(town, archerF, units);
+                break;
+            case 'c':
+                buildUnit(town, crossbowmanF, units);
+                break;
+            case 'r':
+                buildUnit(town, horsemanF, units);
+                break;
+            case 'n':
+                buildUnit(town, knightF, units);
+                break;
+            // Delete unit
             case 'd':
                 delete units[selection];
+                break;
+            // Attacks
+            case 'y':
+                units[selection]->attackWest();
+                break;
+            case 'u':
+                units[selection]->attackSouth();
+                break;
+            case 'i':
+                units[selection]->attackNorth();
+                break;
+            case 'o':
+                units[selection]->attackEast();
                 break;
             default:
                 break;
@@ -126,6 +176,8 @@ void Game::draw(const Scene& scn) const {
         for (Cell* cell : cells) {
             if (cell->getUnit() != nullptr)
                 std::cout << cell->getUnit()->getGraphics() << ' ';
+            else if (cell->getItem() != nullptr)
+                std::cout << cell->getItem()->getGraphics() << ' ';
             else if (cell->getTerrain() != nullptr)
                 std::cout << cell->getTerrain()->getGraphics() << ' ';
             else
@@ -141,13 +193,12 @@ void clearScreen() {
 #ifdef WINDOWS
     std::system("cls");
 #else
-    // Assume POSIX
     std::system ("clear");
 #endif
 }
 
-void buildUnit(Town* t, SwordsmanFactory* sf, std::vector<Unit*>& units) {
-    Unit* u = t->produce(*sf);
+void buildUnit(Town* t, UnitFactory* f, std::vector<Unit*>& units) {
+    Unit* u = t->produce(*f);
     if (u != nullptr) {
         units.push_back(u);
         u->move(t->getPlacementCell());
@@ -177,6 +228,18 @@ Scene* Game::initDefaultScene() {
     scene->getCell(10, 4).setTerrain(spike);
 
     // Place items
+
+    Item* armor = new ArmorPlates();
+    scene->getCell(4, 2).setItem(armor);
+
+    Item* damage = new SharpeningStone();
+    scene->getCell(6, 2).setItem(damage);
+
+    Item* ultimateHealth = new MedicalSupplies(900);
+    scene->getCell(8, 2).setItem(ultimateHealth);
+
+    Item* health = new MedicalSupplies();
+    scene->getCell(10, 2).setItem(health);
 
     return scene;
 }
