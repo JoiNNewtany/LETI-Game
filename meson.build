@@ -17,6 +17,10 @@ sources = [
   'src/terrain/mountain.cpp',
   'src/terrain/hill.cpp',
   'src/terrain/spike.cpp',
+  # Items
+  'src/item/armorPlates.cpp',
+  'src/item/sharpeningStone.cpp',
+  'src/item/medicalSupplies.cpp',
   # Unit hierarchy
   'src/unit/unit.cpp',
   'src/unit/infantry/swordsman.cpp',

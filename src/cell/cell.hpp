@@ -2,6 +2,7 @@
 
 class Unit;
 class Terrain;
+class Item;
 
 class Cell {
     public:
@@ -20,6 +21,9 @@ class Cell {
 
         void setTerrain(Terrain* t) { terrain = t; }
         Terrain* getTerrain() { return terrain; }
+
+        void setItem(Item* i) { item = i; }
+        Item* getItem() { return item; }
 
         void setNorthCell(Cell* c) { north = c; }
         Cell* getNorthCell() { return north; }
@@ -40,6 +44,7 @@ class Cell {
     private:
         Unit* unit = nullptr;
         Terrain* terrain = nullptr;
+        Item* item = nullptr;
         char graphics;
 
         // Store pointers to adjacent cells
