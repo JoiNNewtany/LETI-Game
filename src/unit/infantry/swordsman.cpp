@@ -7,8 +7,9 @@ bool Swordsman::attack(Unit& unit) {
     if (unit.isAlive() && isAlive()) {
         // Deal damage
         unit.setHealth(unit.getHealth() - (damage - unit.getDefense()));
+        
         // Get attacked back because melee combat
-        unit.attack(*this);
+        //health = health - (unit.getDamage() - defense);
 
         successful = true;
     }

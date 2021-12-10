@@ -11,6 +11,7 @@ class Town : public Unit, public IListener {
         Town(unsigned mu = 8, int hp = 200, int df = 5) {
             maxUnits = mu;
             health = hp;
+            maxHealth = hp;
             defense = df;
             graphics = '@';
         }

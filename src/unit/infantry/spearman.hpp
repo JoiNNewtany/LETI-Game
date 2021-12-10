@@ -6,6 +6,7 @@ class Spearman : public Unit {
     public:
         Spearman(int hp = 45, int dmg = 8, int df = 3) {
             health = hp;
+            maxHealth = hp;
             damage = dmg;
             defense = df;
             graphics = 'p';

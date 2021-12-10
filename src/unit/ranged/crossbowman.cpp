@@ -2,7 +2,17 @@
 
 bool Crossbowman::attack(Unit& unit) {
     // Same as Archers
-    return false;
+    bool successful = false;
+
+    // If both units are alive
+    if (unit.isAlive() && isAlive()) {
+        // Deal damage
+        unit.setHealth(unit.getHealth() - (damage - unit.getDefense()));
+
+        successful = true;
+    }
+    
+    return successful; 
 }
 
 Crossbowman* Crossbowman::duplicate() {

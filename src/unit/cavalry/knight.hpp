@@ -6,6 +6,7 @@ class Knight : public Unit {
     public:
         Knight(int hp = 80, int dmg = 15, int df = 5) {
             health = hp;
+            maxHealth = hp;
             damage = dmg;
             defense = df;
             graphics = 'k';

@@ -6,6 +6,7 @@ class Archer : public Unit {
     public:
         Archer(int hp = 30, int dmg = 8, int df = 2) {
             health = hp;
+            maxHealth = hp;
             damage = dmg;
             defense = df;
             graphics = 'a';

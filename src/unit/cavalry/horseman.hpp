@@ -6,6 +6,7 @@ class Horseman : public Unit {
     public:
         Horseman(int hp = 65, int dmg = 7, int df = 2) {
             health = hp;
+            maxHealth = hp;
             damage = dmg;
             defense = df;
             graphics = 'h';

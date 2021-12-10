@@ -2,7 +2,17 @@
 
 bool Archer::attack(Unit& unit) {
     // Ranged unit thus doesn't take return damage after attacking
-    return false;
+    bool successful = false;
+
+    // If both units are alive
+    if (unit.isAlive() && isAlive()) {
+        // Deal damage
+        unit.setHealth(unit.getHealth() - (damage - unit.getDefense()));
+
+        successful = true;
+    }
+    
+    return successful;
 }
 
 Archer* Archer::duplicate() {

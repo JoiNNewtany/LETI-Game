@@ -6,6 +6,7 @@ class Crossbowman : public Unit {
     public:
         Crossbowman(int hp = 35, int dmg = 12, int df = 2) {
             health = hp;
+            maxHealth = hp;
             damage = dmg;
             defense = df;
             graphics = 'c';

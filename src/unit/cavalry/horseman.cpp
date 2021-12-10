@@ -1,8 +1,21 @@
 #include "horseman.hpp"
 
 bool Horseman::attack(Unit& unit) {
-    // Bonus damage against ranged
-    return false;
+    // TODO: Bonus damage against ranged
+    bool successful = false;
+
+    // If both units are alive
+    if (unit.isAlive() && isAlive()) {
+        // Deal damage
+        unit.setHealth(unit.getHealth() - (damage - unit.getDefense()));
+        
+        // Get attacked back because melee combat
+        //health = health - (unit.getDamage() - defense);
+
+        successful = true;
+    }
+    
+    return successful; 
 }
 
 Horseman* Horseman::duplicate() {

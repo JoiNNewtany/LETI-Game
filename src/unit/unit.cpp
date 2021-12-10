@@ -2,11 +2,12 @@
 #include "cell/cell.hpp"
 #include "game/game.hpp"
 #include "terrain/terrain.hpp"
+#include "item/itemContext.hpp"
 
 Unit::~Unit() {
     currentCell->setUnit(nullptr);
     
-    // HACK: Find a better way to remove unit from units vector in Game
+    // TODO: Find a better way to remove unit from units vector in Game
     Game& game = Game::instance();
     game.removeUnit(this);
 }
@@ -41,6 +42,22 @@ bool Unit::move(Cell* cell) {
             if (t != nullptr)
                 t->affect(*this);
 
+            // Pick up item if there is one
+            Item* i = currentCell->getItem();
+            if (i != nullptr) {
+                ItemContext* ic = new ItemContext(i);
+                
+                // Apply item effects
+                ic->applyItemEffect(*this);
+
+                // Remove item from cell
+                currentCell->setItem(nullptr);
+                delete i;
+
+                // Cleanup strategy context
+                delete ic;
+            }
+
             successful = true;
         }
     }
@@ -62,4 +79,43 @@ bool Unit::moveEast() {
 
 bool Unit::moveSouth() {
     return move(currentCell->getSouthCell());
+}
+
+bool Unit::attackNorth() {
+    Unit* u = currentCell->getNorthCell()->getUnit();
+    
+    if (u != nullptr)
+        return attack(*u);
+
+    return false;
+}
+
+bool Unit::attackWest() {
+    Unit* u = currentCell->getWestCell()->getUnit();
+    
+    if (u != nullptr)
+        return attack(*u);
+
+
+    return false;
+}
+
+bool Unit::attackEast() {
+    Unit* u = currentCell->getEastCell()->getUnit();
+    
+    if (u != nullptr)
+        return attack(*u);
+
+
+    return false;
+}
+
+bool Unit::attackSouth() {
+    Unit* u = currentCell->getSouthCell()->getUnit();
+    
+    if (u != nullptr)
+        return attack(*u);
+
+
+    return false;
 }
